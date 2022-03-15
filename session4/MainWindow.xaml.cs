@@ -24,9 +24,7 @@ namespace session4
         public MainWindow()
         {
             InitializeComponent();
-            string connString = @"Data Source=DBSRV\SQL2021;Initial Catalog=Zamaraev_Roman;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
-            SqlConnection sql = new(connString);
-            sql.Open();
+            
         }
     }
 }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 #nullable disable
 
-namespace session4
+namespace session4.Model
 {
     public partial class MaterialsSupplier
     {

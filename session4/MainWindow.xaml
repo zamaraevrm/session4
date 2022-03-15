@@ -3,9 +3,13 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="clr-namespace:session4.ViewModel"
         xmlns:local="clr-namespace:session4"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MV" Height="450" Width="850">
+    <Window.DataContext>
+        <vm:MainWindowViewModel/>
+    </Window.DataContext>
     <Grid>
 
         <Grid.RowDefinitions>
@@ -14,10 +18,13 @@
         </Grid.RowDefinitions>
         
 
-        <ListBox Grid.Row="1" d:ItemsSource="{d:SampleData}">
+        <ListBox Grid.Row="1" ItemsSource="{Binding Materials}" >
+            <ListBox.DataContext>
+                <vm:MainWindowViewModel/>
+            </ListBox.DataContext>
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <Grid Height="200" Width="769" >
+                    <Grid Height="200" Width="769" Margin="0,0,0,50" >
                         <Grid.Resources >
                             <Style TargetType="TextBlock">
                                 <Setter Property="FontSize" Value="16"/>
@@ -37,10 +44,10 @@
                                     <Setter Property="Margin" Value="10"/>
                                     <Setter Property="FontSize" Value="16"/>
                                     <Setter Property="VerticalAlignment" Value="Center"/>
-                                    <Setter Property="Text" Value="sakjdfl"/>
+                                    
                                 </Style>
                             </StackPanel.Resources>
-                            <TextBlock />
+                            <TextBlock Text="{Binding TypeMaterial, StringFormat=\{0\} |}"/>
                             <TextBlock/>
                             <TextBlock/>
                         </StackPanel>
