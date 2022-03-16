@@ -3,6 +3,7 @@ using session4.ViewModel.Base;
 using System.Collections.Generic;
 using System.Linq;
 using System.Collections.ObjectModel;
+using session4.Command;
 
 namespace session4.ViewModel
 {
@@ -50,12 +51,30 @@ namespace session4.ViewModel
             set => Set(_filterList, value);
         }
 
+        private string _searchstr = string.Empty;
+        public string Searchrstr
+        {
+            get => Searchrstr;
+            set => Set(Searchrstr, value);
+        }
+
+        private RelayCommand _searchCommand;
+        public RelayCommand SearchCommand { get
+            {
+                return _searchCommand ??
+                    (_searchCommand = new RelayCommand(obj =>
+                    {
+
+                    }));
+
+            } }
+
         public MainWindowViewModel()
         {
             
             using (session4DBContext context = new session4DBContext())
             {
-                
+                       
                 
                 foreach(var x in context.Materials)
                 {

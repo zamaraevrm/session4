@@ -33,12 +33,12 @@
 
                 </Style>
             </StackPanel.Resources>
-            <TextBox Margin="0" Text="" MinWidth="350" MaxWidth="450" Style="{StaticResource stf}" Height="{Binding ElementName=SeartchPanel, Path=Height}"/>
-            <Button Margin="0" Width="76" Content="Поиск" Style="{StaticResource stf}" Height="{Binding ElementName=SeartchPanel, Path=Height}"/>
+            <TextBox Margin="0" Text="{Binding Searchrstr}" MinWidth="350" MaxWidth="450" Style="{StaticResource stf}" Height="{Binding ElementName=SeartchPanel, Path=Height}" TextChanged="TextBox_TextChanged"/>
+            <Button  Margin="0" Width="76" Content="Поиск" Style="{StaticResource stf}" Height="{Binding ElementName=SeartchPanel, Path=Height}"/>
 
         </StackPanel>
 
-        <ComboBox Name="FilterComboBox" Height="{Binding ElementName=SeartchPanel, Path=Height}" Text="Сортирова" Margin="476,10,202,93" ItemsSource="{Binding FilterList}" >
+        <ComboBox Name="FilterComboBox" Height="{Binding ElementName=SeartchPanel, Path=Height}" Text="Сортирова" Margin="476,10,202,93" ItemsSource="{Binding FilterList}" SelectionChanged="FilterComboBox_SelectionChanged" >
             <ComboBox.ItemTemplate>
                 <DataTemplate>
                     <TextBlock Text="{Binding Mode=OneWay}"/>
@@ -47,7 +47,7 @@
             
         </ComboBox>
 
-        <ListBox Grid.Row="1" ItemsSource="{Binding Panel}" >
+        <ListBox x:Name="ListBoxOfMaterial" Grid.Row="1" ItemsSource="{Binding Panel}" >
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <Grid Height="200" Width="769"  >
