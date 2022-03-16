@@ -43,11 +43,11 @@ namespace session4.ViewModel
             set => Set(_imagesURL, value);
         }
 
-        private ObservableCollection<string> _filterComboBox = new ObservableCollection<string>();
-        public ObservableCollection <string> FilterComboBox
+        private ObservableCollection<string> _filterList = new ObservableCollection<string>();
+        public ObservableCollection <string> FilterList
         {
-            get { return _filterComboBox; }
-            set => Set(_filterComboBox, value);
+            get { return _filterList; }
+            set => Set(_filterList, value);
         }
 
         public MainWindowViewModel()
@@ -55,6 +55,7 @@ namespace session4.ViewModel
             
             using (session4DBContext context = new session4DBContext())
             {
+                
                 
                 foreach(var x in context.Materials)
                 {
@@ -71,9 +72,11 @@ namespace session4.ViewModel
                     y.ThirdField = $"поставщики: {string.Join(',', liststrings)}";
                     y.FortiethField = $"Остаток: {x.Quantity}";
                     _panel.Add(y);
-
-                    FilterComboBox.Add(x.NameMaterial);
+                     
+                    if(_filterList.IndexOf(x.TypeMaterial) == -1)
+                    _filterList.Add(x.TypeMaterial);
                 }
+
                 
 
                 foreach (var x in context.Suppliers)

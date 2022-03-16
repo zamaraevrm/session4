@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:vm="clr-namespace:session4.ViewModel"
         xmlns:local="clr-namespace:session4"
-        xmlns:Model="clr-namespace:session4.Model" x:Class="session4.MainWindow"
+        xmlns:Model="clr-namespace:session4.Model" 
+        x:Class="session4.MainWindow"
         mc:Ignorable="d"
         Title="MV" Height="550" Width="850">
     <Window.DataContext>
@@ -37,12 +38,13 @@
 
         </StackPanel>
 
-        <ComboBox  Height="{Binding ElementName=SeartchPanel, Path=Height}" Text="Сортирова" Margin="476,10,202,93" >
+        <ComboBox Name="FilterComboBox" Height="{Binding ElementName=SeartchPanel, Path=Height}" Text="Сортирова" Margin="476,10,202,93" ItemsSource="{Binding FilterList}" >
             <ComboBox.ItemTemplate>
                 <DataTemplate>
-                    <TextBlock/>
+                    <TextBlock Text="{Binding Mode=OneWay}"/>
                 </DataTemplate>
             </ComboBox.ItemTemplate>
+            
         </ComboBox>
 
         <ListBox Grid.Row="1" ItemsSource="{Binding Panel}" >
@@ -93,6 +95,14 @@
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
+        <ComboBox x:Name="SortComboBox" Height="{Binding Height, ElementName=SeartchPanel}" Text="Сортирова" Margin="668,10,10,93" ItemsSource="{Binding FilterList}">
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding Mode=OneWay}"/>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+            
+        </ComboBox>
 
 
     </Grid>
