@@ -15,7 +15,7 @@ namespace session4.Model
         public string NameMaterial { get; set; }
         public string TypeMaterial { get; set; }
         public string UrlImage { get; set; }
-        public byte[] Price { get; set; }
+        public decimal Price { get; set; }
         public long? Quantity { get; set; }
         public long? MinQuantity { get; set; }
         public long? QuantityInThePackeg { get; set; }
