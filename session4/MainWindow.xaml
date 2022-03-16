@@ -37,7 +37,7 @@
 
         </StackPanel>
 
-        <ComboBox  Height="{Binding ElementName=SeartchPanel, Path=Height}" Text="Сортирова" Margin="476,10,202,93" SelectionChanged="ComboBox_SelectionChanged">
+        <ComboBox  Height="{Binding ElementName=SeartchPanel, Path=Height}" Text="Сортирова" Margin="476,10,202,93" >
             <ComboBox.ItemTemplate>
                 <DataTemplate>
                     <TextBlock/>
