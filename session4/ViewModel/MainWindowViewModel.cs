@@ -9,16 +9,16 @@ namespace session4.ViewModel
 {
     internal class MainWindowViewModel : ViewModelBase
     {
-        private ObservableCollection<dpd> _panel = new ObservableCollection<dpd>();
-        public ObservableCollection<dpd> Panel 
-        { 
+        private ObservableCollection<MaterialInfo> _panel = new ObservableCollection<MaterialInfo>();
+        public ObservableCollection<MaterialInfo> Panel
+        {
             get { return _panel; }
             set => Set(_panel, value);
         }
 
         private ObservableCollection<Material> _materials = new ObservableCollection<Material>();
-        public ObservableCollection<Material> Materials 
-        { 
+        public ObservableCollection<Material> Materials
+        {
             get { return _materials; }
             set => Set(_materials, value);
         }
@@ -36,27 +36,15 @@ namespace session4.ViewModel
             get { return _materialsSupplier; }
             set => Set(_materialsSupplier, value);
         }
-
-        private ObservableCollection<string> _imagesURL = new ObservableCollection<string>();
-        public ObservableCollection<string> ImagesURL
-        {
-            get { return _imagesURL; }
-            set => Set(_imagesURL, value);
-        }
+              
 
         private ObservableCollection<string> _filterList = new ObservableCollection<string>();
-        public ObservableCollection <string> FilterList
+        public ObservableCollection<string> FilterList
         {
             get { return _filterList; }
             set => Set(_filterList, value);
         }
 
-        private string _searchstr = string.Empty;
-        public string Searchrstr
-        {
-            get => Searchrstr;
-            set => Set(Searchrstr, value);
-        }
 
         private RelayCommand _searchCommand;
         public RelayCommand SearchCommand { get
@@ -69,47 +57,64 @@ namespace session4.ViewModel
 
             } }
 
+        private RelayCommand _sortCommand;
+        public RelayCommand SortCommand {
+            get {
+                return _sortCommand ??
+                  (_sortCommand = new RelayCommand(obj =>
+                  {
+                        string filterString = obj as string;
+                        if (!string.IsNullOrEmpty(filterString)) return;                             
+                        if(filterString == "по возрастанию")
+                        {
+                          _panel = new(_panel.OrderBy(x => x.FortiethField));
+                        }
+                        else if(filterString == "по убыванию")
+                        {
+                          _panel = new(_panel.OrderByDescending(x => x.FortiethField));                         
+                        }
+                      
+                  }));
+            }
+        }
+
+        public List<string> SortList { get; set; } = new List<string>() { "по возрастанию", "по убыванию"};
+
         public MainWindowViewModel()
         {
             
             using (session4DBContext context = new session4DBContext())
             {
-                       
+
+
+                Materials = new(context.Materials.OrderBy(p => p.Quantity));
+
                 
-                foreach(var x in context.Materials)
+
+                foreach (var x in context.Materials.OrderBy(p => p.Quantity))
                 {
-                    _materials.Add(x);
-
-                    _imagesURL.Add(@"/Model" + x.UrlImage);
-
-                    dpd y = new dpd();
+                    MaterialInfo y = new MaterialInfo();
                     var liststrings = context.MaterialsSuppliers.Where(p => p.Material == x.NameMaterial)
                                                                     .Select(x => x.Supplier)
                                                                     .ToArray();
                     y.FirstField = $"{x.TypeMaterial} | {x.NameMaterial}";
                     y.SecondField = $"Минимальное количество:{x.MinQuantity}";
                     y.ThirdField = $"поставщики: {string.Join(',', liststrings)}";
-                    y.FortiethField = $"Остаток: {x.Quantity}";
+                    y.FortiethField = x.Quantity;
+                    y.URLImage = x.UrlImage;
                     _panel.Add(y);
-                     
-                    if(_filterList.IndexOf(x.TypeMaterial) == -1)
-                    _filterList.Add(x.TypeMaterial);
+                    if(FilterList.IndexOf(x.TypeMaterial) == -1)
+                    FilterList.Add(x.TypeMaterial);
                 }
 
                 
 
-                foreach (var x in context.Suppliers)
-                {
-                    _supplier.Add(x);
-                    
-                }
                 
-                foreach (var x in context.MaterialsSuppliers)
-                {
-                    _materialsSupplier.Add(x);
-                    
-                }
-                
+
+                MaterialsSuppliers = new(context.MaterialsSuppliers);
+
+                _panel = new(_panel.OrderByDescending(x => x.FortiethField));
+
             }
 
 
