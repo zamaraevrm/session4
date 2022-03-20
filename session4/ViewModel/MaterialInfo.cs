@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace session4.ViewModel
 {
-    internal class dpd
+    internal class MaterialInfo
     {
         public string FirstField { get; set; }
         
@@ -14,6 +14,8 @@ namespace session4.ViewModel
 
         public string ThirdField { get; set; }
 
-        public string FortiethField { get; set; }
+        public long? FortiethField { get; set; }
+
+        public string URLImage { get; set; }
     }
 }

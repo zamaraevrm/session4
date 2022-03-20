@@ -27,6 +27,9 @@ namespace session4
             
         }
 
-       
+        private void SortComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
     }
 }

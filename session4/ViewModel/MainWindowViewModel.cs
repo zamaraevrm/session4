@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Collections.ObjectModel;
 using session4.Command;
+using System;
 
 namespace session4.ViewModel
 {
@@ -13,28 +14,27 @@ namespace session4.ViewModel
         public ObservableCollection<MaterialInfo> Panel
         {
             get { return _panel; }
-            set => Set(_panel, value);
+           
         }
 
         private ObservableCollection<Material> _materials = new ObservableCollection<Material>();
         public ObservableCollection<Material> Materials
         {
             get { return _materials; }
-            set => Set(_materials, value);
+            
         }
 
         private ObservableCollection<Supplier> _supplier = new ObservableCollection<Supplier>();
         public ObservableCollection<Supplier> Supplier
         {
             get { return _supplier; }
-            set => Set(_supplier, value);
+            
         }
 
-        private ObservableCollection<MaterialsSupplier> _materialsSupplier = new ObservableCollection<MaterialsSupplier>();
+        private ObservableCollection<MaterialsSupplier> _materialsSuppliers = new ObservableCollection<MaterialsSupplier>();
         public ObservableCollection<MaterialsSupplier> MaterialsSuppliers
         {
-            get { return _materialsSupplier; }
-            set => Set(_materialsSupplier, value);
+            get { return _materialsSuppliers; }
         }
               
 
@@ -42,7 +42,7 @@ namespace session4.ViewModel
         public ObservableCollection<string> FilterList
         {
             get { return _filterList; }
-            set => Set(_filterList, value);
+            
         }
 
 
@@ -60,18 +60,20 @@ namespace session4.ViewModel
         private RelayCommand _sortCommand;
         public RelayCommand SortCommand {
             get {
+                
                 return _sortCommand ??
                   (_sortCommand = new RelayCommand(obj =>
-                  {
-                        string filterString = obj as string;
-                        if (!string.IsNullOrEmpty(filterString)) return;                             
-                        if(filterString == "по возрастанию")
+                  {                        
+                        int? sort= obj as int?;
+                        
+                        if (sort.HasValue) return;                             
+                        if(SortList[sort.GetValueOrDefault()] == "по возрастанию")
                         {
-                          _panel = new(_panel.OrderBy(x => x.FortiethField));
+                            _panel = new(_panel.OrderBy(x => x.FortiethField));
                         }
-                        else if(filterString == "по убыванию")
+                        else if(SortList[sort.GetValueOrDefault()] == "по убыванию")
                         {
-                          _panel = new(_panel.OrderByDescending(x => x.FortiethField));                         
+                            _panel = new(_panel.OrderByDescending(x => x.FortiethField));                         
                         }
                       
                   }));
@@ -87,7 +89,7 @@ namespace session4.ViewModel
             {
 
 
-                Materials = new(context.Materials.OrderBy(p => p.Quantity));
+                _materials = new(context.Materials.OrderBy(p => p.Quantity));
 
                 
 
@@ -111,7 +113,7 @@ namespace session4.ViewModel
 
                 
 
-                MaterialsSuppliers = new(context.MaterialsSuppliers);
+                _materialsSuppliers = new(context.MaterialsSuppliers);
 
                 _panel = new(_panel.OrderByDescending(x => x.FortiethField));
 

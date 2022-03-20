@@ -6,6 +6,7 @@
         xmlns:vm="clr-namespace:session4.ViewModel"
         xmlns:local="clr-namespace:session4"
         xmlns:Model="clr-namespace:session4.Model" 
+        xmlns:i ="http://schemas.microsoft.com/xaml/behaviors"
         x:Class="session4.MainWindow"
         mc:Ignorable="d"
         Title="MV" Height="550" Width="850">
@@ -33,18 +34,18 @@
 
                 </Style>
             </StackPanel.Resources>
-            <TextBox Margin="0" Text="{Binding Searchrstr}" MinWidth="350" MaxWidth="450" Style="{StaticResource stf}" Height="{Binding ElementName=SeartchPanel, Path=Height}" TextChanged="TextBox_TextChanged"/>
-            <Button  Margin="0" Width="76" Content="Поиск" Style="{StaticResource stf}" Height="{Binding ElementName=SeartchPanel, Path=Height}"/>
+            <TextBox Margin="0" Text="" MinWidth="350" MaxWidth="450" Style="{StaticResource stf}" Height="28" />
+            <Button  Margin="0" Width="76" Content="Поиск" Style="{StaticResource stf}" Height="28"/>
 
         </StackPanel>
 
-        <ComboBox Name="FilterComboBox" Height="{Binding ElementName=SeartchPanel, Path=Height}" Text="Сортирова" Margin="476,10,202,93" ItemsSource="{Binding FilterList}" SelectionChanged="FilterComboBox_SelectionChanged" >
+        <ComboBox Name="FilterComboBox" Height="Auto" Text="Сортирова" Margin="473,12,205,95" ItemsSource="{Binding FilterList}" >
             <ComboBox.ItemTemplate>
                 <DataTemplate>
                     <TextBlock Text="{Binding Mode=OneWay}"/>
                 </DataTemplate>
             </ComboBox.ItemTemplate>
-            
+
         </ComboBox>
 
         <ListBox x:Name="ListBoxOfMaterial" Grid.Row="1" ItemsSource="{Binding Panel}" >
@@ -52,7 +53,7 @@
                 <DataTemplate>
                     <Grid Height="200" Width="769"  >
                         <Grid.Resources >
-                            <Style TargetType="{x:Type TextBlock}">
+                            <Style TargetType="TextBlock">
                                 <Setter Property="FontSize" Value="16"/>
                             </Style>
                         </Grid.Resources>
@@ -62,7 +63,7 @@
                             <ColumnDefinition Width="33*"/>
                         </Grid.ColumnDefinitions>
 
-                        <Image Grid.Column="0"  >
+                        <Image Grid.Column="0"  Source="images/picture.png">
                             <Image.DataContext>
                                 <vm:MainWindowViewModel/>
                             </Image.DataContext>
@@ -71,18 +72,9 @@
 
                         <StackPanel Grid.Column="1">
                             <StackPanel.Resources>
-
-                            </StackPanel.Resources>
-                            <TextBlock />
-                            <TextBlock/>
-                            <TextBlock/>
-                        </StackPanel>
-                        <StackPanel Grid.Column="1">
-                            <StackPanel.Resources>
-                                <Style TargetType="{x:Type TextBlock}">
+                                <Style TargetType="TextBlock">
                                     <Setter Property="Margin" Value="10"/>
                                     <Setter Property="FontSize" Value="16"/>
-                                    <Setter Property="Text" Value="sakjdfl"/>
                                 </Style>
                             </StackPanel.Resources>
                             <TextBlock Text="{Binding FirstField}"/>
@@ -90,18 +82,42 @@
                             <TextBlock Text="{Binding ThirdField}" TextWrapping="Wrap"/>
                         </StackPanel>
 
-                        <TextBlock Text="{Binding FortiethField}" Grid.Column="2" TextAlignment="Right" HorizontalAlignment="Right" Margin="0,20,10,60" Width="127" TextWrapping="Wrap"/>
+                        <TextBlock Text="{Binding StringFormat=Остаток:{0}, Path=FortiethField}" Grid.Column="2" TextAlignment="Right" HorizontalAlignment="Right" Margin="0,20,10,60" Width="127" TextWrapping="Wrap"/>
                     </Grid>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
-        <ComboBox x:Name="SortComboBox" Height="{Binding Height, ElementName=SeartchPanel}" Text="Сортирова" Margin="668,10,10,93" ItemsSource="{Binding FilterList}">
+
+        <ComboBox x:Name="SortComboBox" Height="Auto" Text="Сортирова" Margin="668,12,10,95" ItemsSource="{Binding SortList}" SelectedItem="1">
+            
+            <!--<ComboBox.DataContext>
+                <vm:MainWindowViewModel/>
+            </ComboBox.DataContext>-->
             <ComboBox.ItemTemplate>
                 <DataTemplate>
-                    <TextBlock Text="{Binding Mode=OneWay}"/>
+                    <TextBlock x:Name="BlockText" Text="{Binding }">
+                    </TextBlock>
                 </DataTemplate>
             </ComboBox.ItemTemplate>
-            
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="SelectionChanged">
+                    <i:InvokeCommandAction Command="{Binding SortCommand}" CommandParameter="{Binding ElementName=SortComboBox, Path=SelectedItem}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+            <!--<ComboBoxItem>
+                <TextBlock x:Name="textBlock1" Text="по возрастанию">
+                    <TextBlock.InputBindings>
+                        <MouseBinding MouseAction="LeftClick" Command="{Binding SortCommand}" CommandParameter="{Binding Text, ElementName=textBlock1}"/>
+                    </TextBlock.InputBindings>
+                </TextBlock>
+            </ComboBoxItem>
+            <ComboBoxItem>
+                <TextBlock x:Name="textBlock" Text="по убыванию">
+                    <TextBlock.InputBindings>
+                        <MouseBinding MouseAction="LeftClick" Command="{Binding SortCommand}" CommandParameter="{Binding Text, ElementName=textBlock}"/>
+                    </TextBlock.InputBindings>
+                </TextBlock>
+            </ComboBoxItem>-->
         </ComboBox>
 
 
