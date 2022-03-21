@@ -63,7 +63,7 @@
                             <ColumnDefinition Width="33*"/>
                         </Grid.ColumnDefinitions>
 
-                        <Image Grid.Column="0"  Source="images/picture.png">
+                        <Image Grid.Column="0"  Source="/images/piure.png">
                             <Image.DataContext>
                                 <vm:MainWindowViewModel/>
                             </Image.DataContext>
@@ -88,7 +88,7 @@
             </ListBox.ItemTemplate>
         </ListBox>
 
-        <ComboBox x:Name="SortComboBox" Height="Auto" Text="Сортирова" Margin="668,12,10,95" ItemsSource="{Binding SortList}" SelectedItem="1">
+        <ComboBox x:Name="SortComboBox" Height="Auto" Text="Сортирова" Margin="668,12,10,95" ItemsSource="{Binding SortList}" SelectedIndex="1">
             
             <!--<ComboBox.DataContext>
                 <vm:MainWindowViewModel/>
@@ -101,7 +101,7 @@
             </ComboBox.ItemTemplate>
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="SelectionChanged">
-                    <i:InvokeCommandAction Command="{Binding SortCommand}" CommandParameter="{Binding ElementName=SortComboBox, Path=SelectedItem}"/>
+                    <i:InvokeCommandAction Command="{Binding SortCommand}" CommandParameter="{Binding ElementName=SortComboBox, Path=SelectedIndex}"/>
                 </i:EventTrigger>
             </i:Interaction.Triggers>
             <!--<ComboBoxItem>
