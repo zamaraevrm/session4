@@ -66,16 +66,18 @@ namespace session4.ViewModel
                   {                        
                         int? sort= obj as int?;
                         
-                        if (sort.HasValue) return;                             
+                        if (sort == null) return;
+                        List<MaterialInfo> list= new List<MaterialInfo>();
                         if(SortList[sort.GetValueOrDefault()] == "по возрастанию")
                         {
-                            _panel = new(_panel.OrderBy(x => x.FortiethField));
+                            list.AddRange(_panel.OrderBy(x => x.FortiethField));
                         }
-                        else if(SortList[sort.GetValueOrDefault()] == "по убыванию")
+                        else 
                         {
-                            _panel = new(_panel.OrderByDescending(x => x.FortiethField));                         
+                            list.AddRange(_panel.OrderByDescending(x => x.FortiethField));                         
                         }
-                      
+                        _panel.Clear();
+                        list.ForEach(x => _panel.Add(x));
                   }));
             }
         }
